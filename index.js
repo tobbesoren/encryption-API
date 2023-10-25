@@ -1,5 +1,6 @@
-const { decrypt } = require("./functions/decrypt");
-const { encrypt } = require("./functions/encrypt");
+const { encrypt, decrypt } = require("./functions/reverse");
+const { keyEncrypt, keyDecrypt } = require("./functions/keyEncryption");
+
 //const { sendResponse } = require('./responses/response');
 
 exports.handler = async (event, context) => {
@@ -10,13 +11,13 @@ exports.handler = async (event, context) => {
     if (method === 'GET' && path.startsWith('/encrypt/')) {
         const key = path.split('/encrypt/')[1];
         
-        return encrypt(key, message);
+        return keyEncrypt(key, message);
         
     } 
     else if (method === 'GET' && path.startsWith('/decrypt/')) {
         const key = path.split('/decrypt/')[1];
         
-        return decrypt(key, message);
+        return keyDecrypt(key, message);
     }
     else {
         return {
